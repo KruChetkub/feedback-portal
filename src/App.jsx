@@ -6,7 +6,8 @@ import { DataTable } from './components/DataTable';
 import { FeedbackForm } from './components/FeedbackForm';
 import { RefreshCw, AlertCircle, LayoutDashboard, Edit3 } from 'lucide-react';
 
-const API_URL = 'https://script.google.com/macros/s/AKfycby4-V2gk1xndubCpd8VUTuwGWQR7Qv5r8k-js7v97LaMLEnXViFTjEauPsjSzra48E/exec';
+// Use environment variable instead of hardcoded string for security
+const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
   const { data, loading, error, refetch } = useFeedbackData(API_URL);

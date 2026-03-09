@@ -4,7 +4,6 @@ import { Send, FileText, CheckCircle, AlertCircle } from 'lucide-react';
 export const FeedbackForm = ({ apiUrl }) => {
   const [formData, setFormData] = useState({
     stakeholder_type: '',
-    location: '',
     service_category: '',
     contact_channel: '',
     satisfaction_score: '',
@@ -77,7 +76,7 @@ export const FeedbackForm = ({ apiUrl }) => {
       
       // Reset form
       setFormData({
-        stakeholder_type: '', location: '', service_category: '', contact_channel: '',
+        stakeholder_type: '', service_category: '', contact_channel: '',
         satisfaction_score: '', pain_points: '', suggestions: '', new_ideas: '',
         contact_name: '', contact_phone: '', contact_email: '', pdpa_consent: false,
       });
@@ -125,98 +124,7 @@ export const FeedbackForm = ({ apiUrl }) => {
                   <option value="นักวิชาการ">องค์กรอิสระ/นักวิชาการ</option>
                 </select>
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">จังหวัด (ของผู้แสดงความคิดเห็น) <span className="text-red-500">*</span></label>
-                <input 
-                  type="text" 
-                  name="location" 
-                  value={formData.location} 
-                  onChange={handleChange} 
-                  required 
-                  list="provinces-list"
-                  placeholder="พิมพ์ค้นหาหรือเลือกจังหวัด..." 
-                  className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
-                />
-                <datalist id="provinces-list">
-                  <option value="กระบี่" />
-                  <option value="กรุงเทพมหานคร" />
-                  <option value="กาญจนบุรี" />
-                  <option value="กาฬสินธุ์" />
-                  <option value="กำแพงเพชร" />
-                  <option value="ขอนแก่น" />
-                  <option value="จันทบุรี" />
-                  <option value="ฉะเชิงเทรา" />
-                  <option value="ชลบุรี" />
-                  <option value="ชัยนาท" />
-                  <option value="ชัยภูมิ" />
-                  <option value="ชุมพร" />
-                  <option value="เชียงราย" />
-                  <option value="เชียงใหม่" />
-                  <option value="ตรัง" />
-                  <option value="ตราด" />
-                  <option value="ตาก" />
-                  <option value="นครนายก" />
-                  <option value="นครปฐม" />
-                  <option value="นครพนม" />
-                  <option value="นครราชสีมา" />
-                  <option value="นครศรีธรรมราช" />
-                  <option value="นครสวรรค์" />
-                  <option value="นนทบุรี" />
-                  <option value="นราธิวาส" />
-                  <option value="น่าน" />
-                  <option value="บึงกาฬ" />
-                  <option value="บุรีรัมย์" />
-                  <option value="ปทุมธานี" />
-                  <option value="ประจวบคีรีขันธ์" />
-                  <option value="ปราจีนบุรี" />
-                  <option value="ปัตตานี" />
-                  <option value="พระนครศรีอยุธยา" />
-                  <option value="พะเยา" />
-                  <option value="พังงา" />
-                  <option value="พัทลุง" />
-                  <option value="พิจิตร" />
-                  <option value="พิษณุโลก" />
-                  <option value="เพชรบุรี" />
-                  <option value="เพชรบูรณ์" />
-                  <option value="แพร่" />
-                  <option value="ภูเก็ต" />
-                  <option value="มหาสารคาม" />
-                  <option value="มุกดาหาร" />
-                  <option value="แม่ฮ่องสอน" />
-                  <option value="ยโสธร" />
-                  <option value="ยะลา" />
-                  <option value="ร้อยเอ็ด" />
-                  <option value="ระนอง" />
-                  <option value="ระยอง" />
-                  <option value="ราชบุรี" />
-                  <option value="ลพบุรี" />
-                  <option value="ลำปาง" />
-                  <option value="ลำพูน" />
-                  <option value="เลย" />
-                  <option value="ศรีสะเกษ" />
-                  <option value="สกลนคร" />
-                  <option value="สงขลา" />
-                  <option value="สตูล" />
-                  <option value="สมุทรปราการ" />
-                  <option value="สมุทรสงคราม" />
-                  <option value="สมุทรสาคร" />
-                  <option value="สระแก้ว" />
-                  <option value="สระบุรี" />
-                  <option value="สิงห์บุรี" />
-                  <option value="สุโขทัย" />
-                  <option value="สุพรรณบุรี" />
-                  <option value="สุราษฎร์ธานี" />
-                  <option value="สุรินทร์" />
-                  <option value="หนองคาย" />
-                  <option value="หนองบัวลำภู" />
-                  <option value="อ่างทอง" />
-                  <option value="อำนาจเจริญ" />
-                  <option value="อุดรธานี" />
-                  <option value="อุตรดิตถ์" />
-                  <option value="อุทัยธานี" />
-                  <option value="อุบลราชธานี" />
-                </datalist>
-              </div>
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">หมวดหมู่บริการ <span className="text-red-500">*</span></label>
                 <select name="service_category" value={formData.service_category} onChange={handleChange} required className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
@@ -264,7 +172,7 @@ export const FeedbackForm = ({ apiUrl }) => {
 
           {/* Section 3: ข้อมูลส่วนตัว (PII) */}
           <div className="space-y-4 bg-gray-50 p-4 rounded-xl border border-gray-200">
-            <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2">3. ข้อมูลติดต่อ (ข้อมูลส่วนตัวจะไม่ถูกเปิดเผยต่อสาธารณะ)</h3>
+            <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2">2. ข้อมูลติดต่อ (ข้อมูลส่วนตัวจะไม่ถูกเปิดเผยต่อสาธารณะ)</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">ชื่อ-นามสกุล <span className="text-red-500">*</span></label>

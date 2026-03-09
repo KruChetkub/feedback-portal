@@ -47,6 +47,7 @@ export const ChartsSection = ({ data }) => {
                 tickLine={false}
               />
               <YAxis 
+                allowDecimals={false}
                 tick={{ fill: '#64748b', fontSize: 12 }} 
                 axisLine={false} 
                 tickLine={false} 
