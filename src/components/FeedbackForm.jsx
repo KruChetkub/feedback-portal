@@ -16,9 +16,19 @@ export const FeedbackForm = ({ apiUrl }) => {
     pdpa_consent: false,
   });
 
-  const [loading, setLoading] = useState(false);
+
   const [statusText, setStatusText] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
+  const [hasScrolledToBottom, setHasScrolledToBottom] = useState(false);
+
+  const handleScroll = (e) => {
+    // Check if the user has scrolled to the bottom (with a 2px tolerance)
+    const bottom = Math.abs(e.target.scrollHeight - e.target.scrollTop - e.target.clientHeight) < 2;
+    if (bottom) {
+      setHasScrolledToBottom(true);
+    }
+  };
+
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -195,7 +205,10 @@ export const FeedbackForm = ({ apiUrl }) => {
                   ข้อกำหนดและเงื่อนไขการใช้บริการ
                 </h4>
                 
-                <div className="text-sm text-gray-700 space-y-4 max-h-64 overflow-y-auto pr-2 mb-6 custom-scrollbar">
+                <div 
+                  className="text-sm text-gray-700 space-y-4 max-h-64 overflow-y-auto pr-2 mb-6 custom-scrollbar"
+                  onScroll={handleScroll}
+                >
                   <div>
                     <h5 className="font-bold text-base text-gray-900 mb-2">ข้าพเจ้าให้ความยินยอมในการเก็บรวบรวมข้อมูลส่วนบุคคล</h5>
                     <p className="font-bold mb-1">ข้อกำหนดและเงื่อนไข</p>
@@ -229,16 +242,22 @@ export const FeedbackForm = ({ apiUrl }) => {
                   </div>
                 </div>
 
-                <div className="flex items-start bg-gray-50 p-4 rounded-lg border border-gray-200">
+                <div className={`flex items-start p-4 rounded-lg border ${hasScrolledToBottom ? 'bg-gray-50 border-gray-200' : 'bg-red-50 border-red-200'}`}>
                   <div className="flex-shrink-0 mt-1">
                     <input 
                       type="checkbox" id="pdpa_consent" name="pdpa_consent" 
                       checked={formData.pdpa_consent} onChange={handleChange} required 
-                      className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer" 
+                      disabled={!hasScrolledToBottom}
+                      className={`w-5 h-5 rounded focus:ring-blue-500 ${hasScrolledToBottom ? 'text-blue-600 border-gray-300 cursor-pointer' : 'text-gray-400 border-gray-300 bg-gray-100 cursor-not-allowed'}`} 
                     />
                   </div>
-                  <label htmlFor="pdpa_consent" className="ml-3 text-sm font-medium text-gray-800 cursor-pointer">
+                  <label htmlFor="pdpa_consent" className={`ml-3 text-sm font-medium ${hasScrolledToBottom ? 'text-gray-800 cursor-pointer' : 'text-gray-500 cursor-not-allowed'}`}>
                     ข้าพเจ้าให้ความยินยอมในการเก็บรวบรวมข้อมูลส่วนบุคคล ตามข้อกำหนดและเงื่อนไขข้างต้น <span className="text-red-500">*</span>
+                    {!hasScrolledToBottom && (
+                      <span className="block mt-1 text-xs text-red-600 font-bold">
+                        (กรุณาเลื่อนอ่านข้อกำหนดและเงื่อนไขด้านบนให้ครบถ้วนก่อนติ๊กยอมรับ)
+                      </span>
+                    )}
                   </label>
                 </div>
               </div>
