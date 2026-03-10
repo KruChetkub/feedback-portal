@@ -85,12 +85,11 @@ export const FeedbackForm = ({ apiUrl }) => {
       setIsSuccess(true);
       setStatusText('ส่งข้อเสนอแนะสำเร็จ! ขอบคุณสำหรับความคิดเห็นของคุณ');
       
-      // Reset form
-      setFormData({
-        stakeholder_type: '', service_category: '', contact_channel: '',
-        satisfaction_score: '', pain_points: '', suggestions: '', new_ideas: '',
-        contact_name: '', contact_phone: '', contact_email: '', pdpa_consent: false,
-      });
+      // แสดง Popup ขอบคุณก่อนรีเฟรชหน้าต่าง
+      setTimeout(() => {
+        alert('ส่งข้อเสนอแนะสำเร็จ! ขอบคุณสำหรับความคิดเห็นของคุณ ระบบกำลังรีเฟรชหน้าเว็บ...');
+        window.location.reload();
+      }, 500);
 
     } catch (error) {
       console.error("Submission Error:", error);
