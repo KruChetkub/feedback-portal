@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useFeedbackData } from './hooks/useFeedbackData';
 import { SummaryCards } from './components/SummaryCards';
 import { ChartsSection } from './components/ChartsSection';
-import { DataTable } from './components/DataTable';
 import { FeedbackForm } from './components/FeedbackForm';
 import { RefreshCw, AlertCircle, LayoutDashboard, Edit3 } from 'lucide-react';
 
@@ -84,7 +83,6 @@ function App() {
 
         <SummaryCards data={data} />
         <ChartsSection data={data} />
-        <DataTable data={data} />
       </div>
     );
   };
