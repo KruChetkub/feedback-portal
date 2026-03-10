@@ -6,24 +6,14 @@ import {
 
 export const ChartsSection = ({ data }) => {
   // Process data for Bar Chart (Service Category)
-  const categoryCount = data.reduce((acc, curr) => {
-    const category = curr.service_category || 'ไม่ระบุ';
-    acc[category] = (acc[category] || 0) + 1;
-    return acc;
-  }, {});
-
+  const categoryCount = data.categories || {};
   const barData = Object.keys(categoryCount).map(key => ({
     name: key,
     จำนวน: categoryCount[key]
   }));
 
   // Process data for Pie Chart (Stakeholder Type)
-  const stakeholderCount = data.reduce((acc, curr) => {
-    const type = curr.stakeholder_type || 'ไม่ระบุ';
-    acc[type] = (acc[type] || 0) + 1;
-    return acc;
-  }, {});
-
+  const stakeholderCount = data.stakeholders || {};
   const pieData = Object.keys(stakeholderCount).map(key => ({
     name: key,
     value: stakeholderCount[key]

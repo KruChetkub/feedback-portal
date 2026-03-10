@@ -38,32 +38,35 @@ export const DataTable = ({ data }) => {
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
       <div className="p-6 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
-        <h3 className="text-lg font-semibold text-gray-800">ข้อมูลข้อเสนอแนะทั้งหมด</h3>
-        <span className="text-sm text-gray-500">ทั้งหมด {data.length} รายการ</span>
+        <h3 className="text-lg font-semibold text-gray-800">รายการรับเรื่องล่าสุด</h3>
+        <span className="text-sm text-gray-500">
+          ข้อมูลถูกตั้งค่าให้ปกปิดรายละเอียดเพื่อความปลอดภัย
+        </span>
       </div>
       <div className="overflow-x-auto h-96">
         <table className="w-full text-left border-collapse">
           <thead className="bg-gray-50 text-gray-600 text-sm sticky top-0 shadow-sm z-10">
             <tr>
-              <th className="p-4 font-semibold border-b">วันที่</th>
-              <th className="p-4 font-semibold border-b">ผู้มีส่วนได้ส่วนเสีย</th>
-              <th className="p-4 font-semibold border-b">หมวดหมู่บริการ</th>
-              <th className="p-4 font-semibold border-b w-1/2">รายละเอียด (ปัญหา/ข้อเสนอแนะ)</th>
+              <th className="p-4 font-semibold border-b w-1/3">วัน-เวลาที่ส่งเรื่อง</th>
+              <th className="p-4 font-semibold border-b w-1/3">หมวดหมู่บริการ</th>
+              <th className="p-4 font-semibold border-b w-1/3">สถานะข้อมูล</th>
             </tr>
           </thead>
           <tbody className="text-sm text-gray-700 divide-y divide-gray-100">
-            {data.length === 0 ? (
+            {(!data.latest_timestamps || data.latest_timestamps.length === 0) ? (
               <tr>
-                <td colSpan="4" className="p-8 text-center text-gray-500">ไม่พบข้อมูล</td>
+                <td colSpan="3" className="p-8 text-center text-gray-500">ไม่พบข้อมูลใหม่</td>
               </tr>
             ) : (
-              data.map((row, index) => (
+              data.latest_timestamps.map((row, index) => (
                 <tr key={index} className="hover:bg-gray-50 transition-colors">
                   <td className="p-4 whitespace-nowrap">{formatDate(row.timestamp)}</td>
-                  <td className="p-4">{row.stakeholder_type || '-'}</td>
-                  <td className="p-4">{row.service_category || '-'}</td>
-                  <td className="p-4 text-gray-600 truncate max-w-lg cursor-default" title={row.pain_points || row.suggestions}>
-                    {row.pain_points || row.suggestions || '-'}
+                  <td className="p-4">{row.category || '-'}</td>
+                  <td className="p-4 text-gray-400 italic">
+                    <span className="inline-flex items-center gap-1">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                      เซ็นเซอร์เนื้อหาเพื่อความปลอดภัย
+                    </span>
                   </td>
                 </tr>
               ))

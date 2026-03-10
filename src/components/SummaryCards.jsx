@@ -2,17 +2,11 @@ import React from 'react';
 import { Users, AlertTriangle, Lightbulb } from 'lucide-react';
 
 export const SummaryCards = ({ data }) => {
-  const totalFeedbacks = data.length;
+  // ฟอลแบ็กเผื่อในกรณีที่ตารางยังว่าง หรือข้อมูลยังโหลดไม่เสร็จสมบูรณ์
+  const totalFeedbacks = data.total || 0;
   
-  const complaintCount = data.filter(row => {
-    const s = (row.service_category || '').trim();
-    return s === 'แจ้งเรื่องร้องเรียน';
-  }).length;
-
-  const suggestionCount = data.filter(row => {
-    const s = (row.service_category || '').trim();
-    return s === 'ข้อเสนอแนะ ข้อคิดเห็น';
-  }).length;
+  const complaintCount = data.categories ? (data.categories['แจ้งเรื่องร้องเรียน'] || 0) : 0;
+  const suggestionCount = data.categories ? (data.categories['ข้อเสนอแนะ ข้อคิดเห็น'] || 0) : 0;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">

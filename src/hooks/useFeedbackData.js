@@ -21,23 +21,9 @@ export const useFeedbackData = (apiUrl) => {
          throw new Error(jsonData.error);
       }
 
-      const formattedData = jsonData.map(row => {
-         // ตัดข้อมูลส่วนบุคคล (PII) ทิ้งทันที ไม่ให้ React นำไปใช้งานหรือเก็บไว้ใน State
-         const { 
-           contact_name, 
-           contact_phone, 
-           contact_email, 
-           pdpa_consent, 
-           ...safeRow 
-         } = row;
-         
-         return {
-           ...safeRow,
-           satisfaction_score: parseFloat(safeRow.satisfaction_score) || 0
-         };
-      });
-
-      setData(formattedData);
+      // ข้อมูลที่ได้ตอนนี้เป็น Object สรุปแล้ว (ไม่ใช่ Array)
+      // โครงสร้างเช่น { total: 0, categories: {}, stakeholders: {}, latest_timestamps: [] }
+      setData(jsonData);
     } catch (err) {
       console.error("Fetch error:", err);
       setError("ไม่สามารถดึงข้อมูลได้: " + err.message);
