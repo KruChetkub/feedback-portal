@@ -18,6 +18,7 @@ export const FeedbackForm = ({ apiUrl }) => {
 
 
   const [statusText, setStatusText] = useState('');
+  const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [hasScrolledToBottom, setHasScrolledToBottom] = useState(false);
 
