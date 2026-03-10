@@ -21,7 +21,7 @@ export const SummaryCards = ({ data }) => {
           <Users size={24} />
         </div>
         <div>
-          <p className="text-sm font-medium text-gray-500">จำนวนข้อเสนอแนะทั้งหมด</p>
+          <p className="text-sm font-medium text-gray-500">เรื่องที่รับทั้งหมด</p>
           <p className="text-2xl font-bold text-gray-900 flex items-baseline gap-2">
             {totalFeedbacks} <span className="text-sm font-normal text-gray-500">รายการ</span>
           </p>
@@ -33,7 +33,7 @@ export const SummaryCards = ({ data }) => {
           <AlertTriangle size={24} />
         </div>
         <div>
-          <p className="text-sm font-medium text-gray-500">จำนวนเรื่องร้องเรียน</p>
+          <p className="text-sm font-medium text-gray-500">เรื่องร้องเรียน</p>
           <p className="text-2xl font-bold text-gray-900 flex items-baseline gap-2">
             {complaintCount} <span className="text-sm font-normal text-gray-500">รายการ</span>
           </p>
@@ -45,7 +45,7 @@ export const SummaryCards = ({ data }) => {
           <Lightbulb size={24} />
         </div>
         <div>
-          <p className="text-sm font-medium text-gray-500">จำนวนข้อเสนอแนะ</p>
+          <p className="text-sm font-medium text-gray-500">ข้อเสนอแนะ</p>
           <p className="text-2xl font-bold text-gray-900 flex items-baseline gap-2">
             {suggestionCount} <span className="text-sm font-normal text-gray-500">รายการ</span>
           </p>
