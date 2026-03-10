@@ -84,6 +84,7 @@ export const FeedbackForm = ({ apiUrl }) => {
       // แสดง Popup ขอบคุณในหน้าเว็บ (กล่องสีเขียว)
       setIsSuccess(true);
       setStatusText('ส่งข้อเสนอแนะสำเร็จ! ขอบคุณสำหรับความคิดเห็นของคุณ ระบบกำลังเคลียร์ข้อมูลฟอร์ม...');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       
       // หน่วงเวลา 3 วินาทีเพื่อให้ผู้ใช้อ่านข้อความ แล้วค่อยชาร์จหน้าเว็บใหม่
       setTimeout(() => {
@@ -245,7 +246,7 @@ export const FeedbackForm = ({ apiUrl }) => {
                   <div className="flex-shrink-0 mt-1">
                     <input 
                       type="checkbox" id="pdpa_consent" name="pdpa_consent" 
-                      checked={formData.pdpa_consent} onChange={handleChange} required 
+                      checked={formData.pdpa_consent} onChange={handleChange} 
                       disabled={!hasScrolledToBottom}
                       className={`w-5 h-5 rounded focus:ring-blue-500 ${hasScrolledToBottom ? 'text-blue-600 border-gray-300 cursor-pointer' : 'text-gray-400 border-gray-300 bg-gray-100 cursor-not-allowed'}`} 
                     />
