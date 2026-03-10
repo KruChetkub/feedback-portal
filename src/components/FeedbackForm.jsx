@@ -81,15 +81,14 @@ export const FeedbackForm = ({ apiUrl }) => {
         // mode: 'no-cors' // Google Apps Script POST sometimes requires no-cors to avoid CORS errors on frontend
       });
 
-      // Because of 'no-cors', response.ok will be false/opaque, so we assume success if no error thrown
+      // แสดง Popup ขอบคุณในหน้าเว็บ (กล่องสีเขียว)
       setIsSuccess(true);
-      setStatusText('ส่งข้อเสนอแนะสำเร็จ! ขอบคุณสำหรับความคิดเห็นของคุณ');
+      setStatusText('ส่งข้อเสนอแนะสำเร็จ! ขอบคุณสำหรับความคิดเห็นของคุณ ระบบกำลังเคลียร์ข้อมูลฟอร์ม...');
       
-      // แสดง Popup ขอบคุณก่อนรีเฟรชหน้าต่าง
+      // หน่วงเวลา 3 วินาทีเพื่อให้ผู้ใช้อ่านข้อความ แล้วค่อยชาร์จหน้าเว็บใหม่
       setTimeout(() => {
-        alert('ส่งข้อเสนอแนะสำเร็จ! ขอบคุณสำหรับความคิดเห็นของคุณ ระบบกำลังรีเฟรชหน้าเว็บ...');
         window.location.reload();
-      }, 500);
+      }, 3000);
 
     } catch (error) {
       console.error("Submission Error:", error);
