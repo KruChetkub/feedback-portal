@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Send, FileText, CheckCircle, AlertCircle } from 'lucide-react';
 
 export const FeedbackForm = ({ apiUrl }) => {
@@ -21,6 +21,36 @@ export const FeedbackForm = ({ apiUrl }) => {
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [hasScrolledToBottom, setHasScrolledToBottom] = useState(false);
+  const [cooldownTime, setCooldownTime] = useState(0);
+
+  useEffect(() => {
+    const lastSubmission = localStorage.getItem('last_submission_time');
+    if (lastSubmission) {
+      const timePassed = Math.floor((Date.now() - parseInt(lastSubmission)) / 1000);
+      const cooldownRemaining = 180 - timePassed; // 180 seconds = 3 minutes
+      if (cooldownRemaining > 0) {
+        setCooldownTime(cooldownRemaining);
+      } else {
+        localStorage.removeItem('last_submission_time');
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    let timer;
+    if (cooldownTime > 0) {
+      timer = setInterval(() => {
+        setCooldownTime(prev => {
+          if (prev <= 1) {
+            localStorage.removeItem('last_submission_time');
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [cooldownTime]);
 
   const handleScroll = (e) => {
     // Check if the user has scrolled to the bottom (with a 2px tolerance)
@@ -42,6 +72,12 @@ export const FeedbackForm = ({ apiUrl }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    // ตรวจสอบ Cooldown ป้องกันสแปม
+    if (cooldownTime > 0) {
+      alert(`กรุณารออีก ${Math.floor(cooldownTime / 60)} นาที ${(cooldownTime % 60).toString().padStart(2, '0')} วินาที เพื่อส่งข้อเสนอแนะครั้งต่อไป`);
+      return;
+    }
+
     // ตรวจสอบว่าเช็ค PDPA หรือยัง
     if (!formData.pdpa_consent) {
       alert('กรุณาติ๊กช่อง "ข้าพเจ้าให้ความยินยอมฯ" เพื่อยอมรับข้อกำหนดและเงื่อนไขก่อนส่งข้อมูล');
@@ -86,6 +122,10 @@ export const FeedbackForm = ({ apiUrl }) => {
       setStatusText('ส่งข้อเสนอแนะสำเร็จ! ขอบคุณสำหรับความคิดเห็นของคุณ ระบบกำลังเคลียร์ข้อมูลฟอร์ม...');
       window.scrollTo({ top: 0, behavior: 'smooth' });
       
+      // บันทึกเวลาที่ส่งสำเร็จลงใน Local Storage เพื่อเริ่มนับ Cooldown 3 นาที
+      localStorage.setItem('last_submission_time', Date.now().toString());
+      setCooldownTime(180);
+
       // หน่วงเวลา 3 วินาทีเพื่อให้ผู้ใช้อ่านข้อความ แล้วค่อยชาร์จหน้าเว็บใหม่
       setTimeout(() => {
         window.location.reload();
@@ -154,11 +194,11 @@ export const FeedbackForm = ({ apiUrl }) => {
               <div className="grid grid-cols-1 gap-4 mt-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">ปัญหาที่พบ หรือ เรื่องที่ต้องการร้องเรียน <span className="text-red-500">*</span></label>
-                  <textarea name="pain_points" value={formData.pain_points} onChange={handleChange} required rows="4" placeholder="ระบุรายละเอียดปัญหา บาดแผล หรือเหตุการณ์ที่คุณพบเจออย่างละเอียด..." className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 bg-white"></textarea>
+                  <textarea name="pain_points" value={formData.pain_points} onChange={handleChange} required maxLength="2000" rows="4" placeholder="ระบุรายละเอียดปัญหา บาดแผล หรือเหตุการณ์ที่คุณพบเจออย่างละเอียด..." className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 bg-white"></textarea>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">ข้อเสนอแนะในการปรับปรุงแก้ไข (ถ้ามี)</label>
-                  <textarea name="suggestions" value={formData.suggestions} onChange={handleChange} rows="3" placeholder="สิ่งที่คุณต้องการให้หน่วยงานดำเนินการแก้ไขหรือปรับปรุง..." className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 bg-white"></textarea>
+                  <textarea name="suggestions" value={formData.suggestions} onChange={handleChange} maxLength="2000" rows="3" placeholder="สิ่งที่คุณต้องการให้หน่วยงานดำเนินการแก้ไขหรือปรับปรุง..." className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 bg-white"></textarea>
                 </div>
               </div>
             </div>
@@ -170,11 +210,11 @@ export const FeedbackForm = ({ apiUrl }) => {
               <div className="grid grid-cols-1 gap-4 mt-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">ข้อเสนอแนะ <span className="text-red-500">*</span></label>
-                  <textarea name="suggestions" value={formData.suggestions} onChange={handleChange} required rows="3" placeholder="สิ่งที่คุณอยากให้เราแก้ไขหรือพัฒนา..." className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white"></textarea>
+                  <textarea name="suggestions" value={formData.suggestions} onChange={handleChange} required maxLength="2000" rows="3" placeholder="สิ่งที่คุณอยากให้เราแก้ไขหรือพัฒนา..." className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white"></textarea>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">ไอเดีย หรือ โครงการใหม่ๆ ที่อยากเห็น (ถ้ามี)</label>
-                  <textarea name="new_ideas" value={formData.new_ideas} onChange={handleChange} rows="2" placeholder="นวัตกรรม หรือบริการรูปแบบใหม่ที่คุณอยากให้มี..." className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white"></textarea>
+                  <textarea name="new_ideas" value={formData.new_ideas} onChange={handleChange} maxLength="2000" rows="2" placeholder="นวัตกรรม หรือบริการรูปแบบใหม่ที่คุณอยากให้มี..." className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white"></textarea>
                 </div>
               </div>
             </div>
@@ -183,18 +223,18 @@ export const FeedbackForm = ({ apiUrl }) => {
           {/* Section 3: ข้อมูลส่วนตัว (PII) */}
           <div className="space-y-4 bg-gray-50 p-4 rounded-xl border border-gray-200">
             <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2">2. ข้อมูลติดต่อ (ข้อมูลส่วนตัวจะไม่ถูกเปิดเผยต่อสาธารณะ)</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">ชื่อ-นามสกุล <span className="text-red-500">*</span></label>
-                <input type="text" name="contact_name" value={formData.contact_name} onChange={handleChange} required className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+                <input type="text" name="contact_name" value={formData.contact_name} onChange={handleChange} required maxLength="100" className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">เบอร์โทรศัพท์ <span className="text-red-500">*</span></label>
-                <input type="tel" name="contact_phone" value={formData.contact_phone} onChange={handleChange} required className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+                <input type="tel" name="contact_phone" value={formData.contact_phone} onChange={handleChange} required maxLength="20" className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">อีเมล</label>
-                <input type="email" name="contact_email" value={formData.contact_email} onChange={handleChange} className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+                <input type="email" name="contact_email" value={formData.contact_email} onChange={handleChange} maxLength="100" className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
               </div>
             </div>
 
@@ -266,11 +306,13 @@ export const FeedbackForm = ({ apiUrl }) => {
 
           <button 
             type="submit" 
-            disabled={loading}
-            className={`w-full py-3 px-6 text-white font-medium rounded-lg shadow-sm transition-all flex items-center justify-center gap-2 ${loading ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'}`}
+            disabled={loading || cooldownTime > 0}
+            className={`w-full py-3 px-6 text-white font-medium rounded-lg shadow-sm transition-all flex items-center justify-center gap-2 ${loading || cooldownTime > 0 ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'}`}
           >
             {loading ? (
               <>กำลังส่งข้อมูล...</>
+            ) : cooldownTime > 0 ? (
+              <>ระบบป้องกันสแปม (ส่งอีกครั้งใน {Math.floor(cooldownTime / 60)}:{(cooldownTime % 60).toString().padStart(2, '0')} นาที)</>
             ) : (
               <><Send size={20} /> ส่งความเห็น (Submit)</>
             )}
