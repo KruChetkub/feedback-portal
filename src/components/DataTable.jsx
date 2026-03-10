@@ -23,6 +23,13 @@ export const DataTable = ({ data }) => {
       // Check if Date is valid
       if (isNaN(date.getTime())) return dateString;
       
+      // หากปีเป็น พ.ศ. (2500 ขึ้นไป) อยู่แล้ว ให้แปลงกลับเป็น ค.ศ. ก่อน 
+      // เพื่อป้องกันไม่ให้ toLocaleDateString('th-TH') ไปบวกซ้ำอีก 543
+      let year = date.getFullYear();
+      if (year >= 2500) {
+        date.setFullYear(year - 543);
+      }
+
       return date.toLocaleDateString('th-TH', {
         year: 'numeric',
         month: 'short',
