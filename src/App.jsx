@@ -11,8 +11,6 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
   const { data, loading, error, refetch } = useFeedbackData(API_URL);
-  const [selectedMonth, setSelectedMonth] = useState('all');
-  const [selectedYear, setSelectedYear] = useState('all');
 
   const renderDashboard = () => {
     if (loading) {
@@ -42,7 +40,7 @@ function App() {
       );
     }
 
-    if (data.length === 0) {
+    if (!data || data.total === undefined || data.total === 0) {
       return (
         <div className="mt-12 text-center py-20 bg-white rounded-xl border border-gray-100 shadow-sm">
           <p className="text-gray-500 mb-4">ยังไม่มีข้อมูลข้อเสนอแนะในระบบ</p>
@@ -55,50 +53,6 @@ function App() {
         </div>
       );
     }
-
-    // --- Extract Year Safely (Handle Both CE and BE from string) ---
-    const getBuddhistYear = (dateString) => {
-      const d = new Date(dateString);
-      if (isNaN(d.getTime())) return null;
-      let year = d.getFullYear();
-      // If year is less than 2500, it's likely CE/AD, so we add 543 to make it BE
-      // If it's already 25xx or more, it's likely already BE recorded by the system
-      if (year < 2500) {
-        year += 543;
-      }
-      return year;
-    };
-
-    // --- Filter Logic ---
-    // Extract unique years from data for the dropdown
-    const availableYears = [...new Set(data.map(item => {
-      if (!item.timestamp) return null;
-      return getBuddhistYear(item.timestamp);
-    }).filter(Boolean))].sort((a, b) => b - a); // Sort descending
-
-    // Filter data based on selected month and year
-    const filteredData = data.filter(item => {
-      if (!item.timestamp) return false;
-      const date = new Date(item.timestamp);
-      if (isNaN(date.getTime())) return false; // Skip invalid dates
-      
-      const itemMonth = (date.getMonth() + 1).toString(); // getMonth is 0-indexed
-      const itemYear = getBuddhistYear(item.timestamp)?.toString();
-
-      const monthMatch = selectedMonth === 'all' || itemMonth === selectedMonth;
-      const yearMatch = selectedYear === 'all' || itemYear === selectedYear;
-
-      return monthMatch && yearMatch;
-    });
-
-    const months = [
-      { value: '1', label: 'มกราคม' }, { value: '2', label: 'กุมภาพันธ์' },
-      { value: '3', label: 'มีนาคม' }, { value: '4', label: 'เมษายน' },
-      { value: '5', label: 'พฤษภาคม' }, { value: '6', label: 'มิถุนายน' },
-      { value: '7', label: 'กรกฎาคม' }, { value: '8', label: 'สิงหาคม' },
-      { value: '9', label: 'กันยายน' }, { value: '10', label: 'ตุลาคม' },
-      { value: '11', label: 'พฤศจิกายน' }, { value: '12', label: 'ธันวาคม' }
-    ];
 
     return (
       <div className="mt-16 pt-12 border-t border-gray-200">
@@ -128,51 +82,9 @@ function App() {
           </div>
         </div>
 
-        {/* Filter Controls */}
-        <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 mb-8 flex flex-col sm:flex-row gap-4 items-center justify-between">
-          <div className="flex items-center gap-2 text-gray-700 font-medium">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-            </svg>
-            ตัวกรองข้อมูล
-          </div>
-          <div className="flex flex-col sm:flex-row w-full sm:w-auto gap-3">
-            <select 
-              value={selectedMonth} 
-              onChange={(e) => setSelectedMonth(e.target.value)}
-              className="p-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 min-w-[150px]"
-            >
-              <option value="all">ทุกเดือน</option>
-              {months.map(m => (
-                <option key={m.value} value={m.value}>{m.label}</option>
-              ))}
-            </select>
-            
-            <select 
-              value={selectedYear} 
-              onChange={(e) => setSelectedYear(e.target.value)}
-              className="p-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 min-w-[120px]"
-            >
-              <option value="all">ทุกปี</option>
-              {availableYears.map(year => (
-                <option key={year} value={year}>{year}</option> // ระบบดึงปี พ.ศ. ที่ถูกต้องมาแล้ว
-              ))}
-            </select>
-          </div>
-        </div>
-
-        {filteredData.length === 0 ? (
-          <div className="text-center py-12 bg-white rounded-xl border border-gray-100 shadow-sm mb-8">
-            <p className="text-gray-500">ไม่มีข้อมูลในช่วงเวลาที่คุณเลือก</p>
-          </div>
-        ) : (
-          <>
-            <SummaryCards data={filteredData} />
-            <ChartsSection data={filteredData} />
-          </>
-        )}
-        
-        {/* <DataTable data={data} /> ขอซ่อนตารางข้อมูลเอาไว้ก่อนตามที่ต้องการ */}
+        <SummaryCards data={data} />
+        <ChartsSection data={data} />
+        <DataTable data={data} />
       </div>
     );
   };
