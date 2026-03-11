@@ -181,6 +181,8 @@ export const FeedbackForm = ({ apiUrl }) => {
                   <option value="">-- เลือกหมวดหมู่ --</option>
                   <option value="แจ้งเรื่องร้องเรียน">แจ้งเรื่องร้องเรียน</option>
                   <option value="ข้อเสนอแนะ ข้อคิดเห็น">ข้อเสนอแนะ ข้อคิดเห็น</option>
+                  <option value="ความคิดเห็นด้านการบริการใหม่">ความคิดเห็นด้านการบริการใหม่</option>
+                  <option value="ปรับปรุงบริการเดิมของกองยุทธศาสตร์และแผนงาน">ปรับปรุงบริการเดิมของกองยุทธศาสตร์และแผนงาน</option>
                 </select>
               </div>
 
@@ -204,7 +206,7 @@ export const FeedbackForm = ({ apiUrl }) => {
             </div>
           )}
 
-          {formData.service_category === 'ข้อเสนอแนะ ข้อคิดเห็น' && (
+          {['ข้อเสนอแนะ ข้อคิดเห็น', 'ความคิดเห็นด้านการบริการใหม่', 'ปรับปรุงบริการเดิมของกองยุทธศาสตร์และแผนงาน'].includes(formData.service_category) && (
             <div className="space-y-4 bg-green-50 p-6 rounded-xl border border-green-100">
               <h3 className="text-lg font-semibold text-green-800 border-b border-green-200 pb-2">2. ข้อเสนอแนะและข้อคิดเห็น</h3>
               <div className="grid grid-cols-1 gap-4 mt-4">
