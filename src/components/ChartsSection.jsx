@@ -46,7 +46,11 @@ export const ChartsSection = ({ data }) => {
                 cursor={{ fill: '#f1f5f9' }}
                 contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
               />
-              <Bar dataKey="จำนวน" fill="#3b82f6" radius={[4, 4, 0, 0]} maxBarSize={60} />
+              <Bar dataKey="จำนวน" radius={[4, 4, 0, 0]} maxBarSize={60}>
+                {barData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Bar>
             </BarChart>
           </ResponsiveContainer>
         </div>
