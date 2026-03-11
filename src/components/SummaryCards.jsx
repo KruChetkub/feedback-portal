@@ -6,7 +6,11 @@ export const SummaryCards = ({ data }) => {
   const totalFeedbacks = data.total || 0;
   
   const complaintCount = data.categories ? (data.categories['แจ้งเรื่องร้องเรียน'] || 0) : 0;
-  const suggestionCount = data.categories ? (data.categories['ข้อเสนอแนะ ข้อคิดเห็น'] || 0) : 0;
+  
+  const suggestion1 = data.categories ? (data.categories['ข้อเสนอแนะ ข้อคิดเห็น'] || 0) : 0;
+  const suggestion2 = data.categories ? (data.categories['ความคิดเห็นด้านการบริการใหม่'] || 0) : 0;
+  const suggestion3 = data.categories ? (data.categories['ปรับปรุงบริการเดิมของกองยุทธศาสตร์และแผนงาน'] || 0) : 0;
+  const suggestionCount = suggestion1 + suggestion2 + suggestion3;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
