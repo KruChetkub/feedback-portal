@@ -9,7 +9,11 @@ export const useFeedbackData = (apiUrl) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(apiUrl);
+      // ป้องกัน Google Apps Script แคชข้อมูลเก่า โดยการเติม ?t=timestamp ต่อท้าย URL เสมอ
+      const separator = apiUrl.includes('?') ? '&' : '?';
+      const noCacheUrl = `${apiUrl}${separator}t=${Date.now()}`;
+      
+      const response = await fetch(noCacheUrl);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
