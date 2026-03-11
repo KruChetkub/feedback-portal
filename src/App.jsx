@@ -5,8 +5,9 @@ import { ChartsSection } from './components/ChartsSection';
 import { FeedbackForm } from './components/FeedbackForm';
 import { RefreshCw, AlertCircle, LayoutDashboard, Edit3 } from 'lucide-react';
 
-// Use environment variable instead of hardcoded string for security
-const API_URL = import.meta.env.VITE_API_URL;
+// ฝังลิงก์ API เสมือนจริงลงไปในโค้ดเลย เพื่อแก้ปัญหาที่ Vercel ไม่ดึงค่าจากไฟล์ .env
+const API_URL = 'https://script.google.com/macros/s/AKfycbwYGI97gQZcNodrD0XtOlEMKsipNXcgN-OqY9f0JJxWCddfz8LnyIJWMWnYkE8idu79/exec';
+
 
 function App() {
   const { data, loading, error, refetch } = useFeedbackData(API_URL);
