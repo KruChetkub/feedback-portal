@@ -10,10 +10,15 @@ export const useFeedbackData = (apiUrl) => {
     setError(null);
     try {
       // ป้องกัน Google Apps Script แคชข้อมูลเก่า โดยการเติม ?t=timestamp ต่อท้าย URL เสมอ
+      // ป้องกัน Google Apps Script และ Browser แคชข้อมูลเก่าแบบขั้นสูงสุด (Force Bypass Cache)
       const separator = apiUrl.includes('?') ? '&' : '?';
       const noCacheUrl = `${apiUrl}${separator}t=${Date.now()}`;
       
-      const response = await fetch(noCacheUrl);
+      const response = await fetch(noCacheUrl, { 
+        cache: 'no-store'
+        // ห้ามส่ง custom headers (เช่น Cache-Control) เพราะ Google Apps Script ไม่รองรับ CORS Preflight
+      });
+      
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
