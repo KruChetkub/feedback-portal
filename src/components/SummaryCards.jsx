@@ -13,7 +13,7 @@ export const SummaryCards = ({ data }) => {
   const suggestionCount = suggestion1 + suggestion2 + suggestion3;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
       <div className="bg-white rounded-xl shadow-sm p-6 flex items-center space-x-4 border border-gray-100 transition-all hover:shadow-md">
         <div className="p-3 bg-blue-50 text-blue-600 rounded-lg">
           <Users size={24} />
@@ -22,18 +22,6 @@ export const SummaryCards = ({ data }) => {
           <p className="text-sm font-medium text-gray-500">เรื่องที่รับทั้งหมด</p>
           <p className="text-2xl font-bold text-gray-900 flex items-baseline gap-2">
             {totalFeedbacks} <span className="text-sm font-normal text-gray-500">รายการ</span>
-          </p>
-        </div>
-      </div>
-
-      <div className="bg-white rounded-xl shadow-sm p-6 flex items-center space-x-4 border border-gray-100 transition-all hover:shadow-md">
-        <div className="p-3 bg-amber-50 text-amber-500 rounded-lg">
-          <AlertTriangle size={24} />
-        </div>
-        <div>
-          <p className="text-sm font-medium text-gray-500">เรื่องร้องเรียน</p>
-          <p className="text-2xl font-bold text-gray-900 flex items-baseline gap-2">
-            {complaintCount} <span className="text-sm font-normal text-gray-500">รายการ</span>
           </p>
         </div>
       </div>

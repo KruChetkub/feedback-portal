@@ -18,14 +18,13 @@ export const ChartsSection = ({ data }) => {
 
   // บังคับให้แสดงหมวดหมู่หลักเสมอ แม้จะยังไม่มีข้อมูล (ข้อมูลเป็น 0)
   const standardCategories = [
-    'แจ้งเรื่องร้องเรียน',
     'ข้อเสนอแนะ ข้อคิดเห็น',
     'ความคิดเห็นด้านการบริการใหม่',
     'ปรับปรุงบริการเดิมของกองยุทธศาสตร์และแผนงาน'
   ];
 
-  // นำหมวดหมู่หลักมารวมกับหมวดหมู่อื่นๆ ที่อาจหลงเหลือใน Google Sheets
-  const allCategories = [...new Set([...standardCategories, ...Object.keys(categoryCount)])];
+  // นำหมวดหมู่หลักมารวมกับหมวดหมู่อื่นๆ ที่อาจหลงเหลือใน Google Sheets (แต่กรอง 'แจ้งเรื่องร้องเรียน' ทิ้ง)
+  const allCategories = [...new Set([...standardCategories, ...Object.keys(categoryCount)])].filter(cat => cat !== 'แจ้งเรื่องร้องเรียน');
 
   const barData = allCategories.map((key, index) => {
     // ย่อชื่อที่ยาวเกินไปให้แสดงในกราฟใต้แกน X ได้สวยงาม ไม่ทับกัน
