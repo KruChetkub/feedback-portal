@@ -155,7 +155,7 @@ export const FeedbackForm = ({ apiUrl }) => {
           
           {/* Section 1: ข้อมูลผู้ติดต่อ */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-gray-800 border-b pb-2">1. ข้อมูลทั่วไป</h3>
+            <h3 className="text-lg font-semibold text-gray-800 border-b pb-2">ข้อมูลทั่วไป</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">กลุ่มผู้แสดงความคิดเห็น <span className="text-red-500">*</span></label>
