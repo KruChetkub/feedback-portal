@@ -109,16 +109,6 @@ function App() {
       {/* Main Content Area */}
       <main className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 mt-4">
         
-        {/* Header Setup for Form Section */}
-        <div className="mb-8 text-center max-w-2xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
-            แบบฟอร์มรับฟังความคิดเห็นสาธารณะ
-          </h2>
-          <p className="text-gray-500 mt-3 md:text-lg">
-            กรุณากรอกข้อมูลเพื่อช่วยเราพัฒนาการให้บริการที่ดีขึ้น
-          </p>
-        </div>
-
         {/* Form Component */}
         <FeedbackForm apiUrl={API_URL} />
 
