@@ -140,7 +140,7 @@ export const FeedbackForm = ({ apiUrl }) => {
         <h2 className="text-2xl font-bold flex items-center justify-center gap-2">
           <FileText /> แบบฟอร์มแสดงความคิดเห็น
         </h2>
-        <p className="mt-2 text-blue-100">เราใส่ใจทุกเสียงสะท้อนของคุณ เพื่อนำไปพัฒนานโยบายและบริการให้ดียิ่งขึ้น</p>
+        <p className="mt-2 text-blue-100">กองยุทธศาสตร์และแผนงาน ด้านการให้บริการ</p>
       </div>
 
       <div className="p-6 md:p-8">
