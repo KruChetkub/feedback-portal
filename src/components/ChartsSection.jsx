@@ -87,7 +87,7 @@ export const ChartsSection = ({ data }) => {
 
       {/* Pie Chart */}
       <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-        <h3 className="text-lg font-semibold text-gray-800 mb-6 border-b pb-2">สัดส่วนประเภทผู้มีส่วนได้ส่วนเสีย</h3>
+        <h3 className="text-lg font-semibold text-gray-800 mb-6 border-b pb-2">สัดส่วนกลุ่มผู้แสดงความคิดเห็น</h3>
         <div className="h-80 w-full">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
