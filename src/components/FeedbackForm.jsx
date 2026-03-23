@@ -137,7 +137,6 @@ export const FeedbackForm = ({ apiUrl }) => {
   return (
     <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
       <div className="bg-blue-600 p-6 text-white text-center flex flex-col items-center gap-3">
-        <img src="/logoCopyDsp.png" alt="Logo" className="h-16 w-auto brightness-0 invert" />
         <div>
           <h2 className="text-2xl font-bold flex items-center justify-center gap-2">
             แบบฟอร์มแสดงความคิดเห็น
