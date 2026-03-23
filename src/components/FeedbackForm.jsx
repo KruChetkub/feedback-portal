@@ -212,7 +212,7 @@ export const FeedbackForm = ({ apiUrl }) => {
           {/* Section 2: Dynamic Form based on Category */}
           {['ข้อเสนอแนะ ข้อคิดเห็น', 'ความคิดเห็นด้านการบริการใหม่', 'ปรับปรุงบริการเดิมของกองยุทธศาสตร์และแผนงาน'].includes(formData.service_category) && (
             <div className="space-y-4 bg-green-50 p-6 rounded-xl border border-green-100">
-              <h3 className="text-lg font-semibold text-green-800 border-b border-green-200 pb-2">2. ข้อเสนอแนะและข้อคิดเห็น</h3>
+              <h3 className="text-lg font-semibold text-green-800 border-b border-green-200 pb-2">2. {formData.service_category}</h3>
               <div className="grid grid-cols-1 gap-4 mt-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">ข้อเสนอแนะ <span className="text-red-500">*</span></label>
