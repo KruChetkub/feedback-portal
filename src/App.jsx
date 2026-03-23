@@ -95,12 +95,12 @@ function App() {
       <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-2">
-              <div className="bg-blue-600 text-white p-2 rounded-lg">
-                <Edit3 size={20} />
+            <div className="flex items-center gap-3">
+              <img src="/logoCopyDsp.png" alt="Logo" className="h-10 w-auto" />
+              <div className="flex flex-col">
+                <h1 className="text-lg font-bold text-gray-900 leading-tight">กองยุทธศาสตร์และแผนงาน</h1>
+                <p className="text-xs text-blue-600 font-medium tracking-wide uppercase">Feedback Portal</p>
               </div>
-              <h1 className="text-xl font-bold text-gray-900 tracking-tight hidden sm:block">Public Feedback Portal</h1>
-              <h1 className="text-xl font-bold text-gray-900 tracking-tight sm:hidden">Feedback Portal</h1>
             </div>
           </div>
         </div>
