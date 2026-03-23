@@ -30,11 +30,12 @@ function App() {
   ];
 
   const currentYear = new Date().getFullYear();
+  const startYear = 2026; // ระบบเริ่มปีนี้ (พ.ศ. 2569)
   const years = [
     { value: '', label: 'ทุกปี' },
-    ...Array.from({ length: 5 }, (_, i) => ({
-      value: (currentYear - i).toString(),
-      label: (currentYear - i + 543).toString() // Thai Year
+    ...Array.from({ length: Math.max(0, currentYear - startYear + 1) }, (_, i) => ({
+      value: (startYear + i).toString(),
+      label: (startYear + i + 543).toString() // Thai Year
     }))
   ];
 
