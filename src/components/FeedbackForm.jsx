@@ -14,6 +14,7 @@ export const FeedbackForm = ({ apiUrl }) => {
     contact_phone: '',
     contact_email: '',
     pdpa_consent: false,
+    address_line_2: '', // Honeypot field
   });
 
 
@@ -75,6 +76,15 @@ export const FeedbackForm = ({ apiUrl }) => {
     // ตรวจสอบ Cooldown ป้องกันสแปม
     if (cooldownTime > 0) {
       alert(`กรุณารออีก ${Math.floor(cooldownTime / 60)} นาที ${(cooldownTime % 60).toString().padStart(2, '0')} วินาที เพื่อส่งข้อเสนอแนะครั้งต่อไป`);
+      return;
+    }
+
+    // ตรวจสอบ Honeypot (ป้องกัน Bot)
+    if (formData.address_line_2) {
+      console.warn("Spam detected via Honeypot");
+      setStatusText('ขออภัย ระบบขัดข้องชั่วคราว (Bot Detection)');
+      setIsSuccess(false);
+      setLoading(false);
       return;
     }
 
@@ -157,6 +167,20 @@ export const FeedbackForm = ({ apiUrl }) => {
           
           {/* Section 1: ข้อมูลผู้ติดต่อ */}
           <div className="space-y-4">
+            {/* Honeypot field - Hidden from users */}
+            <div style={{ display: 'none' }} aria-hidden="true">
+              <label htmlFor="address_line_2">Please leave this field blank</label>
+              <input 
+                type="text" 
+                id="address_line_2" 
+                name="address_line_2" 
+                value={formData.address_line_2} 
+                onChange={handleChange} 
+                tabIndex="-1" 
+                autoComplete="off" 
+              />
+            </div>
+
             <h3 className="text-lg font-semibold text-gray-800 border-b pb-2">ข้อมูลทั่วไป</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>

@@ -6,7 +6,7 @@ import { FeedbackForm } from './components/FeedbackForm';
 import { RefreshCw, AlertCircle, LayoutDashboard, Edit3 } from 'lucide-react';
 
 // ฝังลิงก์ API เสมือนจริงลงไปในโค้ดเลย เพื่อแก้ปัญหาที่ Vercel ไม่ดึงค่าจากไฟล์ .env
-const API_URL = 'https://script.google.com/macros/s/AKfycbwYGI97gQZcNodrD0XtOlEMKsipNXcgN-OqY9f0JJxWCddfz8LnyIJWMWnYkE8idu79/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbwVEbK3uKJbn9sS1ucfieban7cV5Q8rTVcPm_vtMDDZ2s8ObpGYmr-0uSzB0z96ruFw/exec';
 
 
 function App() {
