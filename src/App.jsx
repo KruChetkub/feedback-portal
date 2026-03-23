@@ -62,7 +62,7 @@ function App() {
               <LayoutDashboard className="text-blue-600" /> แดชบอร์ดสรุปผล
             </h2>
             <p className="text-gray-500 mt-2">
-              สรุปผลการรับฟังความคิดเห็นและการกำหนดนโยบาย (ข้อมูลอัปเดตแบบเรียลไทม์)
+              
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center w-full md:w-auto">
