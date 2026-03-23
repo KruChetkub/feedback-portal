@@ -99,7 +99,6 @@ function App() {
               <img src="/logoCopyDsp.png" alt="Logo" className="h-10 w-auto" />
               <div className="flex flex-col">
                 <h1 className="text-lg font-bold text-gray-900 leading-tight">กองยุทธศาสตร์และแผนงาน</h1>
-                <p className="text-xs text-blue-600 font-medium tracking-wide uppercase">Feedback Portal</p>
               </div>
             </div>
           </div>
