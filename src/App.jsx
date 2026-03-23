@@ -6,11 +6,42 @@ import { FeedbackForm } from './components/FeedbackForm';
 import { RefreshCw, AlertCircle, LayoutDashboard, Edit3 } from 'lucide-react';
 
 // ฝังลิงก์ API เสมือนจริงลงไปในโค้ดเลย เพื่อแก้ปัญหาที่ Vercel ไม่ดึงค่าจากไฟล์ .env
-const API_URL = 'https://script.google.com/macros/s/AKfycbwVEbK3uKJbn9sS1ucfieban7cV5Q8rTVcPm_vtMDDZ2s8ObpGYmr-0uSzB0z96ruFw/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbxKUN4M9ZtPb2Pnl27imU6_TCM3QR75it7Fn9wrzth6wOrUhYfN_sFqSylnxtLRXczj/exec';
 
 
 function App() {
-  const { data, loading, error, refetch } = useFeedbackData(API_URL);
+  const [filters, setFilters] = useState({ month: '', year: '' });
+  const { data, loading, error, refetch } = useFeedbackData(API_URL, filters);
+
+  const months = [
+    { value: '', label: 'ทุกเดือน' },
+    { value: '01', label: 'มกราคม' },
+    { value: '02', label: 'กุมภาพันธ์' },
+    { value: '03', label: 'มีนาคม' },
+    { value: '04', label: 'เมษายน' },
+    { value: '05', label: 'พฤษภาคม' },
+    { value: '06', label: 'มิถุนายน' },
+    { value: '07', label: 'กรกฎาคม' },
+    { value: '08', label: 'สิงหาคม' },
+    { value: '09', label: 'กันยายน' },
+    { value: '10', label: 'ตุลาคม' },
+    { value: '11', label: 'พฤศจิกายน' },
+    { value: '12', label: 'ธันวาคม' },
+  ];
+
+  const currentYear = new Date().getFullYear();
+  const years = [
+    { value: '', label: 'ทุกปี' },
+    ...Array.from({ length: 5 }, (_, i) => ({
+      value: (currentYear - i).toString(),
+      label: (currentYear - i + 543).toString() // Thai Year
+    }))
+  ];
+
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilters(prev => ({ ...prev, [name]: value }));
+  };
 
   const renderDashboard = () => {
     if (loading) {
@@ -80,6 +111,40 @@ function App() {
               อัปเดตล่าสุด: {new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' })} น.
             </div>
           </div>
+        </div>
+
+        {/* Filters Section */}
+        <div className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm mb-6 flex flex-wrap gap-4 items-center">
+          <div className="flex items-center gap-2">
+            <label className="text-sm font-semibold text-gray-700">เลือกปี:</label>
+            <select 
+              name="year" 
+              value={filters.year} 
+              onChange={handleFilterChange}
+              className="p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-gray-50 text-sm"
+            >
+              {years.map(y => <option key={y.value} value={y.value}>{y.label}</option>)}
+            </select>
+          </div>
+          <div className="flex items-center gap-2">
+            <label className="text-sm font-semibold text-gray-700">เลือกเดือน:</label>
+            <select 
+              name="month" 
+              value={filters.month} 
+              onChange={handleFilterChange}
+              className="p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-gray-50 text-sm"
+            >
+              {months.map(m => <option key={m.value} value={m.value}>{m.label}</option>)}
+            </select>
+          </div>
+          {(filters.month || filters.year) && (
+            <button 
+              onClick={() => setFilters({ month: '', year: '' })}
+              className="text-xs text-red-600 hover:underline font-medium"
+            >
+              ล้างตัวกรอง
+            </button>
+          )}
         </div>
 
         <SummaryCards data={data} />

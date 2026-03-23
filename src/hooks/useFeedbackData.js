@@ -1,12 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
 
-export const useFeedbackData = (apiUrl) => {
+export const useFeedbackData = (apiUrl, filters = { month: '', year: '' }) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const CACHE_KEY = `dashboard_data_${apiUrl}`;
-  const CACHE_TIME_KEY = `dashboard_data_time_${apiUrl}`;
+  const CACHE_KEY = `dashboard_data_${apiUrl}_${filters.month}_${filters.year}`;
+  const CACHE_TIME_KEY = `dashboard_data_time_${apiUrl}_${filters.month}_${filters.year}`;
   const CACHE_DURATION = 60 * 1000; // 60 seconds cache
 
   const fetchData = useCallback(async () => {
@@ -34,7 +34,8 @@ export const useFeedbackData = (apiUrl) => {
       // ป้องกัน Google Apps Script แคชข้อมูลเก่า โดยการเติม ?t=timestamp ต่อท้าย URL เสมอ
       // ป้องกัน Google Apps Script และ Browser แคชข้อมูลเก่าแบบขั้นสูงสุด (Force Bypass Cache)
       const separator = apiUrl.includes('?') ? '&' : '?';
-      const noCacheUrl = `${apiUrl}${separator}t=${Date.now()}`;
+      const filterParams = `month=${filters.month}&year=${filters.year}`;
+      const noCacheUrl = `${apiUrl}${separator}${filterParams}&t=${Date.now()}`;
       
       const response = await fetch(noCacheUrl, { 
         cache: 'no-store'
@@ -71,7 +72,7 @@ export const useFeedbackData = (apiUrl) => {
     if (apiUrl) {
       fetchData();
     }
-  }, [apiUrl, fetchData]);
+  }, [apiUrl, fetchData, filters.month, filters.year]);
 
   return { data, loading, error, refetch: fetchData };
 };
