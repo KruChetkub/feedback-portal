@@ -26,12 +26,16 @@ export const FeedbackForm = ({ apiUrl }) => {
 
     // === Method B: Client-side Rate Limiting ===
     // ป้องกันการกดส่งซ้ำถี่เกินไป (ฝั่ง Browser)
-    const RATE_LIMIT_KEY = 'last_submit_time';
+    const RATE_LIMIT_KEY = "last_submit_time";
     const RATE_LIMIT_MS = 30000; // 30 วินาที
-    const lastSubmit = parseInt(localStorage.getItem(RATE_LIMIT_KEY) || '0');
+    const lastSubmit = parseInt(localStorage.getItem(RATE_LIMIT_KEY) || "0");
     if (Date.now() - lastSubmit < RATE_LIMIT_MS) {
-      const remaining = Math.ceil((RATE_LIMIT_MS - (Date.now() - lastSubmit)) / 1000);
-      setStatusText(`กรุณารอ ${remaining} วินาที ก่อนส่งความเห็นครั้งถัดไปครับ`);
+      const remaining = Math.ceil(
+        (RATE_LIMIT_MS - (Date.now() - lastSubmit)) / 1000,
+      );
+      setStatusText(
+        `กรุณารอ ${remaining} วินาที ก่อนส่งความเห็นครั้งถัดไปครับ`,
+      );
       setIsSuccess(false);
       return;
     }
@@ -56,18 +60,18 @@ export const FeedbackForm = ({ apiUrl }) => {
         stakeholder_type: sanitizeInput(formData.stakeholder_type),
         service_category: sanitizeInput(formData.service_category),
         suggestions: sanitizeInput(formData.suggestions),
-        address_line_2: formData.address_line_2 || '', // Honeypot
+        address_line_2: formData.address_line_2 || "", // Honeypot
         _t: Date.now().toString(), // Timestamp (Server จะสร้าง Token ใหม่เอง)
       });
 
-      const response = await fetch('/api/submit', {
-        method: 'POST',
+      const response = await fetch("/api/submit", {
+        method: "POST",
         body: dataToSend,
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
       });
 
       if (!response.ok && response.status !== 200) {
-        throw new Error('Submission failed');
+        throw new Error("Submission failed");
       }
 
       // บันทึกเวลาส่งสำเร็จ สำหรับ Rate Limiting รอบถัดไป
@@ -184,6 +188,9 @@ export const FeedbackForm = ({ apiUrl }) => {
               </h3>
               <div className="grid grid-cols-1 gap-4 mt-4">
                 <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    ข้อเสนอแนะ <span className="text-red-500">*</span>
+                  </label>
                   <textarea
                     name="suggestions"
                     value={formData.suggestions}
@@ -208,7 +215,13 @@ export const FeedbackForm = ({ apiUrl }) => {
             autoComplete="off"
             tabIndex="-1"
             aria-hidden="true"
-            style={{ opacity: 0, position: 'absolute', left: '-9999px', height: 0, width: 0 }}
+            style={{
+              opacity: 0,
+              position: "absolute",
+              left: "-9999px",
+              height: 0,
+              width: 0,
+            }}
           />
 
           <button
