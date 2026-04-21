@@ -57,24 +57,15 @@ export default async function handler(req, res) {
 
   // === ด่าน 2: Honeypot ===
   if (get('address_line_2') !== '') {
-    // หลอกว่าสำเร็จ แต่ไม่บันทึก
     return res.status(200).json({ result: 'success' });
   }
 
-  // === ด่าน 3: Timestamp Token Verification ===
+  // === ด่าน 3: Timestamp Freshness Check ===
+  // ตรวจว่า request ส่งมาไม่เกิน 10 นาที (ป้องกัน replay attack)
   const clientTs = get('_t');
-  const clientTk = get('_tk');
   const tsNum    = parseInt(clientTs || '0');
-
-  // Token ต้องไม่เก่าเกิน 5 นาที
-  if (!clientTs || Math.abs(Date.now() - tsNum) > 300000) {
-    return res.status(403).json({ error: 'Token expired' });
-  }
-
-  // ตรวจสอบ hash ตรงกันไหม
-  const expected = djb2Hash(clientTs + GAS_SECRET);
-  if (clientTk !== expected) {
-    return res.status(403).json({ error: 'Invalid token' });
+  if (!clientTs || Math.abs(Date.now() - tsNum) > 600000) {
+    return res.status(403).json({ error: 'Request expired' });
   }
 
   // === ด่าน 4: ส่งต่อไปยัง Apps Script ===
