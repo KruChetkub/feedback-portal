@@ -13,6 +13,24 @@ export default defineConfig(({ mode }) => {
     plugins: [react(), tailwindcss()],
     server: {
       proxy: {
+        // Dev proxy: ชี้ /api/dashboard และ /api/submit ไปที่ GAS โดยตรง
+        "/api/dashboard": {
+          target: gasOrigin,
+          changeOrigin: true,
+          secure: true,
+          rewrite: (path) => {
+            const url = new URL(path, "http://localhost");
+            const params = url.search || '';
+            return gasPathname + params;
+          },
+        },
+        "/api/submit": {
+          target: gasOrigin,
+          changeOrigin: true,
+          secure: true,
+          rewrite: () => gasPathname,
+        },
+        // Legacy proxy (fallback)
         "/api/gas": {
           target: gasOrigin,
           changeOrigin: true,
@@ -23,3 +41,4 @@ export default defineConfig(({ mode }) => {
     },
   };
 });
+

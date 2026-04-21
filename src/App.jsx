@@ -5,8 +5,8 @@ import { ChartsSection } from './components/ChartsSection';
 import { FeedbackForm } from './components/FeedbackForm';
 import { RefreshCw, AlertCircle, LayoutDashboard, Edit3 } from 'lucide-react';
 
-const API_URL = import.meta.env.DEV ? '/api/gas' : (import.meta.env.VITE_API_URL || '');
-
+// ✅ ปลอดภัย: ชี้ไปที่ Vercel Serverless Proxy — GAS URL ไม่ปรากฏใน Browser
+const API_URL = '/api/dashboard';
 
 function App() {
   const [filters, setFilters] = useState({ month: '', year: '' });

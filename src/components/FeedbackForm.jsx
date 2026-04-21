@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { Send, CheckCircle, AlertCircle } from "lucide-react";
 
-// ค่า Secret ที่ใช้ร่วมกับ Apps Script (ต้องตรงกันทั้ง 2 ฝั่ง)
-const SHARED_SECRET = 'GYP_FDDS_2569';
-
 export const FeedbackForm = ({ apiUrl }) => {
   const [formData, setFormData] = useState({
     stakeholder_type: "",
@@ -54,33 +51,24 @@ export const FeedbackForm = ({ apiUrl }) => {
         return sanitized;
       };
 
-      // === Method A: Timestamp Token ===
-      // สร้าง Token = timestamp + Secret เพื่อให้ Apps Script ยืนยันว่า request มาจากหน้าเว็บจริงๆ
-      const nowTs = Date.now().toString();
-      const tokenRaw = nowTs + SHARED_SECRET;
-      // Hash แบบง่าย (djb2) เพื่อส่งไปยืนยันฝั่ง Server
-      let hash = 5381;
-      for (let i = 0; i < tokenRaw.length; i++) {
-        hash = ((hash << 5) + hash) + tokenRaw.charCodeAt(i);
-        hash = hash & hash; // Convert to 32bit integer
-      }
-      const clientToken = Math.abs(hash).toString(16);
-
+      // ส่ง Form ผ่าน Vercel Proxy — GAS URL และ Secret ซ่อนอยู่ใน Server
       const dataToSend = new URLSearchParams({
         stakeholder_type: sanitizeInput(formData.stakeholder_type),
         service_category: sanitizeInput(formData.service_category),
         suggestions: sanitizeInput(formData.suggestions),
         address_line_2: formData.address_line_2 || '', // Honeypot
-        _t: nowTs,           // Timestamp สำหรับตรวจสอบ
-        _tk: clientToken,    // Token hash สำหรับยืนยัน
+        _t: Date.now().toString(), // Timestamp (Server จะสร้าง Token ใหม่เอง)
       });
 
-      const response = await fetch(apiUrl, {
-        method: "POST",
+      const response = await fetch('/api/submit', {
+        method: 'POST',
         body: dataToSend,
-        mode: "no-cors",
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       });
-      void response;
+
+      if (!response.ok && response.status !== 200) {
+        throw new Error('Submission failed');
+      }
 
       // บันทึกเวลาส่งสำเร็จ สำหรับ Rate Limiting รอบถัดไป
       localStorage.setItem(RATE_LIMIT_KEY, Date.now().toString());
@@ -95,7 +83,6 @@ export const FeedbackForm = ({ apiUrl }) => {
         window.location.reload();
       }, 3000);
     } catch (error) {
-      console.error("Submission Error:", error);
       setStatusText("เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง");
       setIsSuccess(false);
     } finally {
