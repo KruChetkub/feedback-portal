@@ -1,0 +1,574 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="uuOwscW26FjCrG6oKRNXNgtSTjxU2yiztGKlopdb">
+
+    
+    
+    
+    <title>
+                Download รูปภาพ - ระบบจองกรอบรูป            </title>
+
+    
+    
+    
+                            <link rel="stylesheet" href="https://www.papayond.com/vendor/fontawesome-free/css/all.min.css">
+                <link rel="stylesheet" href="https://www.papayond.com/vendor/overlayScrollbars/css/OverlayScrollbars.min.css">
+                <link rel="stylesheet" href="https://www.papayond.com/vendor/adminlte/dist/css/adminlte.min.css">
+
+                                    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+                            
+    
+    
+    
+    
+    
+            
+    
+    
+</head>
+
+<body class="sidebar-mini" >
+
+    
+        <div class="wrapper">
+
+        
+                    <div class="preloader flex-column justify-content-center align-items-center" style="">
+
+    
+        
+        <img src="https://www.papayond.com/vendor/adminlte/dist/img/AdminLTELogo.png"
+             class="img-circle animation__shake"
+             alt="AdminLTE Preloader Image"
+             width="60"
+             height="60"
+             style="animation-iteration-count:infinite;">
+
+    
+</div>
+        
+        
+                    
+            <nav
+    class="main-header navbar
+    navbar-expand
+    navbar-white navbar-light">
+
+    
+    <ul class="navbar-nav">
+
+        
+        <li class="nav-item">
+    <a class="nav-link" data-widget="pushmenu" href="#"
+                        >
+        <i class="fas fa-bars"></i>
+        <span class="sr-only">Toggle navigation</span>
+    </a>
+</li>
+        
+        
+        
+        
+        
+                    
+                    
+    </ul>
+
+    
+    <ul class="navbar-nav ml-auto">
+        
+        
+        
+        
+        
+                                    <li class="nav-item dropdown user-menu">
+
+    
+    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                <span >
+            พิเชษฐ์ ศรีพิชัย
+        </span>
+    </a>
+
+    
+    <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+
+        
+                            
+        
+        
+        
+        
+        
+        <li class="user-footer">
+                            <a href="https://www.papayond.com/profile" class="nav-link btn btn-default btn-flat d-inline-block">
+                    <i class="fa fa-fw fa-user text-lightblue"></i>
+                    Profile
+                </a>
+                        <a class="btn btn-default btn-flat float-right "
+               href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <i class="fa fa-fw fa-power-off text-red"></i>
+                Log Out
+            </a>
+            <form id="logout-form" action="https://www.papayond.com/logout" method="POST" style="display: none;">
+                                <input type="hidden" name="_token" value="uuOwscW26FjCrG6oKRNXNgtSTjxU2yiztGKlopdb" autocomplete="off">
+            </form>
+        </li>
+
+    </ul>
+
+</li>
+                    
+        
+            </ul>
+
+</nav>
+        
+        
+                    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+
+    
+            <a href="https://www.papayond.com/home"
+            class="brand-link "
+    >
+
+    
+    <img src="https://www.papayond.com/vendor/adminlte/dist/img/AdminLTELogo.png"
+         alt="Admin Logo"
+         class="brand-image img-circle elevation-3"
+         style="opacity:.8">
+
+    
+    <span class="brand-text font-weight-light ">
+        <b>PHOTO</b>-DB
+    </span>
+
+</a>
+    
+    
+    <div class="sidebar">
+        <nav class="pt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column "
+                data-widget="treeview" role="menu"
+                                >
+                
+                <li  class="nav-item">
+
+    <a class="nav-link  "
+       href="https://www.papayond.com/home"        >
+
+        <i class="nav-icon fas fa-clipboard-list "></i>
+
+        <p>
+            รายละเอียดการจอง
+
+                    </p>
+
+    </a>
+
+</li>
+
+<li  class="nav-item">
+
+    <a class="nav-link  "
+       href="https://www.papayond.com/profile"        >
+
+        <i class="nav-icon fas fa-user-edit me-2 text-muted "></i>
+
+        <p>
+            แก้ไขข้อมูลส่วนตัว
+
+                    </p>
+
+    </a>
+
+</li>
+
+<li  class="nav-item">
+
+    <a class="nav-link  "
+       href="https://www.papayond.com/history"        >
+
+        <i class="nav-icon fas fa-history me-2 text-muted "></i>
+
+        <p>
+            ประวัติการสั่งซื้อ
+
+                    </p>
+
+    </a>
+
+</li>
+
+<li  class="nav-item">
+
+    <a class="nav-link active "
+       href="https://www.papayond.com/download-photos"        >
+
+        <i class="nav-icon fas fa-cloud-download-alt me-2 text-primary "></i>
+
+        <p>
+            Download รูปภาพ
+
+                    </p>
+
+    </a>
+
+</li>
+
+<li  class="nav-item">
+
+    <a class="nav-link  "
+       href="https://www.papayond.com/booking"        >
+
+        <i class="nav-icon fas fa-plus-circle text-success "></i>
+
+        <p>
+            สั่งจองใหม่
+
+                    </p>
+
+    </a>
+
+</li>
+
+            </ul>
+        </nav>
+    </div>
+
+</aside>
+        
+        
+                    <div class="content-wrapper">
+
+    
+    
+    
+            <div class="content-header">
+            <div class="container-fluid">
+                    <h1><i class="fas fa-cloud-download-alt text-primary"></i> ดาวน์โหลดรูปภาพ</h1>
+            </div>
+        </div>
+    
+    
+    <div class="content">
+        <div class="container-fluid">
+                        <style>
+    @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap');
+    body { font-family: 'Kanit', sans-serif; }
+    .photo-preview {
+        width: 100%;
+        height: 300px;
+        object-fit: contain;
+        background-color: #f8f9fa;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+    .qr-container {
+        padding: 15px;
+        background: #fff;
+        display: inline-block;
+        border: 1px dashed #ccc;
+        border-radius: 10px;
+    }
+</style>
+
+<div class="container py-4">
+
+            <div class="row">
+                        
+            <div class="col-md-6 col-lg-4 card-col">
+                <div class="card card-outline card-primary shadow-sm h-100">
+                    <div class="card-header">
+                        <h3 class="card-title fw-bold">
+                            <i class="fas fa-film me-1"></i> ฟิล์ม: 0443
+                                                    </h3>
+                        <div class="card-tools">
+                            <span class="badge badge-info">ปี 69</span>
+                        </div>
+                    </div>
+                    <div class="card-body text-center">
+                        
+                        <div class="mb-3">
+                            <img src="https://www.papayond.com/dl/2569/142/69_142_0443.jpg"
+                                 alt="Student Photo"
+                                 class="photo-preview mb-2"
+                                 onerror="removeCard(this)">
+                            <div class="small text-muted">69_142_0443.jpg</div>
+                        </div>
+
+                        <hr>
+
+                        
+                        <ul class="list-unstyled text-start small mb-3 text-muted">
+                            <li><strong>ชื่อ:</strong> พิเชษฐ์ ศรีพิชัย</li>
+                            <li><strong>สถาบัน:</strong> มหาวิทยาลัยพิษณุโลก ประจำปี 62-67</li>
+                            <li><strong>ปีการศึกษา:</strong> 2569 (69)</li>
+                        </ul>
+
+                        
+                        <div class="mb-3">
+                            <p class="mb-1 fw-bold text-secondary">Scan to Download</p>
+                            <div class="qr-container">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fwww.papayond.com%2Fdl%2F2569%2F142%2F69_142_0443.jpg"
+             alt="QR Code" width="120">
+                            </div>
+                        </div>
+
+                        
+                        <a href="https://www.papayond.com/dl/2569/142/69_142_0443.jpg" target="_blank" class="btn btn-success btn-lg w-100 btn-download">
+                            <i class="fas fa-download me-2"></i> ดาวน์โหลดไฟล์ต้นฉบับ
+                        </a>
+                    </div>
+                </div>
+            </div>
+                        
+            <div class="col-md-6 col-lg-4 card-col">
+                <div class="card card-outline card-primary shadow-sm h-100">
+                    <div class="card-header">
+                        <h3 class="card-title fw-bold">
+                            <i class="fas fa-film me-1"></i> ฟิล์ม: 0443
+                                                            <span class="badge bg-secondary ms-1">#2</span>
+                                                    </h3>
+                        <div class="card-tools">
+                            <span class="badge badge-info">ปี 69</span>
+                        </div>
+                    </div>
+                    <div class="card-body text-center">
+                        
+                        <div class="mb-3">
+                            <img src="https://www.papayond.com/dl/2569/142/69_142_0443_2.jpg"
+                                 alt="Student Photo"
+                                 class="photo-preview mb-2"
+                                 onerror="removeCard(this)">
+                            <div class="small text-muted">69_142_0443_2.jpg</div>
+                        </div>
+
+                        <hr>
+
+                        
+                        <ul class="list-unstyled text-start small mb-3 text-muted">
+                            <li><strong>ชื่อ:</strong> พิเชษฐ์ ศรีพิชัย</li>
+                            <li><strong>สถาบัน:</strong> มหาวิทยาลัยพิษณุโลก ประจำปี 62-67</li>
+                            <li><strong>ปีการศึกษา:</strong> 2569 (69)</li>
+                        </ul>
+
+                        
+                        <div class="mb-3">
+                            <p class="mb-1 fw-bold text-secondary">Scan to Download</p>
+                            <div class="qr-container">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fwww.papayond.com%2Fdl%2F2569%2F142%2F69_142_0443_2.jpg"
+             alt="QR Code" width="120">
+                            </div>
+                        </div>
+
+                        
+                        <a href="https://www.papayond.com/dl/2569/142/69_142_0443_2.jpg" target="_blank" class="btn btn-success btn-lg w-100 btn-download">
+                            <i class="fas fa-download me-2"></i> ดาวน์โหลดไฟล์ต้นฉบับ
+                        </a>
+                    </div>
+                </div>
+            </div>
+                        
+            <div class="col-md-6 col-lg-4 card-col">
+                <div class="card card-outline card-primary shadow-sm h-100">
+                    <div class="card-header">
+                        <h3 class="card-title fw-bold">
+                            <i class="fas fa-film me-1"></i> ฟิล์ม: 0443
+                                                            <span class="badge bg-secondary ms-1">#3</span>
+                                                    </h3>
+                        <div class="card-tools">
+                            <span class="badge badge-info">ปี 69</span>
+                        </div>
+                    </div>
+                    <div class="card-body text-center">
+                        
+                        <div class="mb-3">
+                            <img src="https://www.papayond.com/dl/2569/142/69_142_0443_3.jpg"
+                                 alt="Student Photo"
+                                 class="photo-preview mb-2"
+                                 onerror="removeCard(this)">
+                            <div class="small text-muted">69_142_0443_3.jpg</div>
+                        </div>
+
+                        <hr>
+
+                        
+                        <ul class="list-unstyled text-start small mb-3 text-muted">
+                            <li><strong>ชื่อ:</strong> พิเชษฐ์ ศรีพิชัย</li>
+                            <li><strong>สถาบัน:</strong> มหาวิทยาลัยพิษณุโลก ประจำปี 62-67</li>
+                            <li><strong>ปีการศึกษา:</strong> 2569 (69)</li>
+                        </ul>
+
+                        
+                        <div class="mb-3">
+                            <p class="mb-1 fw-bold text-secondary">Scan to Download</p>
+                            <div class="qr-container">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fwww.papayond.com%2Fdl%2F2569%2F142%2F69_142_0443_3.jpg"
+             alt="QR Code" width="120">
+                            </div>
+                        </div>
+
+                        
+                        <a href="https://www.papayond.com/dl/2569/142/69_142_0443_3.jpg" target="_blank" class="btn btn-success btn-lg w-100 btn-download">
+                            <i class="fas fa-download me-2"></i> ดาวน์โหลดไฟล์ต้นฉบับ
+                        </a>
+                    </div>
+                </div>
+            </div>
+                        
+            <div class="col-md-6 col-lg-4 card-col">
+                <div class="card card-outline card-primary shadow-sm h-100">
+                    <div class="card-header">
+                        <h3 class="card-title fw-bold">
+                            <i class="fas fa-film me-1"></i> ฟิล์ม: 0443
+                                                            <span class="badge bg-secondary ms-1">#4</span>
+                                                    </h3>
+                        <div class="card-tools">
+                            <span class="badge badge-info">ปี 69</span>
+                        </div>
+                    </div>
+                    <div class="card-body text-center">
+                        
+                        <div class="mb-3">
+                            <img src="https://www.papayond.com/dl/2569/142/69_142_0443_4.jpg"
+                                 alt="Student Photo"
+                                 class="photo-preview mb-2"
+                                 onerror="removeCard(this)">
+                            <div class="small text-muted">69_142_0443_4.jpg</div>
+                        </div>
+
+                        <hr>
+
+                        
+                        <ul class="list-unstyled text-start small mb-3 text-muted">
+                            <li><strong>ชื่อ:</strong> พิเชษฐ์ ศรีพิชัย</li>
+                            <li><strong>สถาบัน:</strong> มหาวิทยาลัยพิษณุโลก ประจำปี 62-67</li>
+                            <li><strong>ปีการศึกษา:</strong> 2569 (69)</li>
+                        </ul>
+
+                        
+                        <div class="mb-3">
+                            <p class="mb-1 fw-bold text-secondary">Scan to Download</p>
+                            <div class="qr-container">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fwww.papayond.com%2Fdl%2F2569%2F142%2F69_142_0443_4.jpg"
+             alt="QR Code" width="120">
+                            </div>
+                        </div>
+
+                        
+                        <a href="https://www.papayond.com/dl/2569/142/69_142_0443_4.jpg" target="_blank" class="btn btn-success btn-lg w-100 btn-download">
+                            <i class="fas fa-download me-2"></i> ดาวน์โหลดไฟล์ต้นฉบับ
+                        </a>
+                    </div>
+                </div>
+            </div>
+                        
+            <div class="col-md-6 col-lg-4 card-col">
+                <div class="card card-outline card-primary shadow-sm h-100">
+                    <div class="card-header">
+                        <h3 class="card-title fw-bold">
+                            <i class="fas fa-film me-1"></i> ฟิล์ม: 0443
+                                                            <span class="badge bg-secondary ms-1">#5</span>
+                                                    </h3>
+                        <div class="card-tools">
+                            <span class="badge badge-info">ปี 69</span>
+                        </div>
+                    </div>
+                    <div class="card-body text-center">
+                        
+                        <div class="mb-3">
+                            <img src="https://www.papayond.com/dl/2569/142/69_142_0443_5.jpg"
+                                 alt="Student Photo"
+                                 class="photo-preview mb-2"
+                                 onerror="removeCard(this)">
+                            <div class="small text-muted">69_142_0443_5.jpg</div>
+                        </div>
+
+                        <hr>
+
+                        
+                        <ul class="list-unstyled text-start small mb-3 text-muted">
+                            <li><strong>ชื่อ:</strong> พิเชษฐ์ ศรีพิชัย</li>
+                            <li><strong>สถาบัน:</strong> มหาวิทยาลัยพิษณุโลก ประจำปี 62-67</li>
+                            <li><strong>ปีการศึกษา:</strong> 2569 (69)</li>
+                        </ul>
+
+                        
+                        <div class="mb-3">
+                            <p class="mb-1 fw-bold text-secondary">Scan to Download</p>
+                            <div class="qr-container">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fwww.papayond.com%2Fdl%2F2569%2F142%2F69_142_0443_5.jpg"
+             alt="QR Code" width="120">
+                            </div>
+                        </div>
+
+                        
+                        <a href="https://www.papayond.com/dl/2569/142/69_142_0443_5.jpg" target="_blank" class="btn btn-success btn-lg w-100 btn-download">
+                            <i class="fas fa-download me-2"></i> ดาวน์โหลดไฟล์ต้นฉบับ
+                        </a>
+                    </div>
+                </div>
+            </div>
+                    </div>
+    </div>
+        </div>
+    </div>
+
+</div>
+        
+        
+        
+        
+        
+    </div>
+
+    
+                            <script src="https://www.papayond.com/vendor/jquery/jquery.min.js"></script>
+                <script src="https://www.papayond.com/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                <script src="https://www.papayond.com/vendor/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+                <script src="https://www.papayond.com/vendor/adminlte/dist/js/adminlte.min.js"></script>
+            
+    
+    
+    
+    
+    
+            <script>
+    // ฟังก์ชันจัดการแสดงผล Card
+    function showCard(img) {
+        // เมื่อรูปโหลดสำเร็จ -> ให้แสดง Card (ลบ d-none)
+        $(img).closest('.card-col').removeClass('d-none');
+    }
+
+    function removeCard(img) {
+        // เมื่อรูปโหลดไม่สำเร็จ -> ให้ลบ Card ทิ้งไปเลย (ไม่ต้องแสดง)
+        $(img).closest('.card-col').remove();
+    }
+
+    // เพิ่มลูกเล่นเล็กน้อยเมื่อกดปุ่ม
+    $('.btn-download').on('click', function() {
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: 'กำลังเริ่มดาวน์โหลด...',
+            showConfirmButton: false,
+            timer: 3000
+        });
+    });
+</script>
+
+</body>
+
+</html>

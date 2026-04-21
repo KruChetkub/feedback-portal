@@ -5,8 +5,7 @@ import { ChartsSection } from './components/ChartsSection';
 import { FeedbackForm } from './components/FeedbackForm';
 import { RefreshCw, AlertCircle, LayoutDashboard, Edit3 } from 'lucide-react';
 
-// ฝังลิงก์ API เสมือนจริงลงไปในโค้ดเลย เพื่อแก้ปัญหาที่ Vercel ไม่ดึงค่าจากไฟล์ .env
-const API_URL = 'https://script.google.com/macros/s/AKfycbxKUN4M9ZtPb2Pnl27imU6_TCM3QR75it7Fn9wrzth6wOrUhYfN_sFqSylnxtLRXczj/exec';
+const API_URL = import.meta.env.DEV ? '/api/gas' : (import.meta.env.VITE_API_URL || '');
 
 
 function App() {
